@@ -1,0 +1,33 @@
+<h3 class="page-header">Restaurant Details</h3>
+<p>Welcome to your dashboard</p>
+<br/><br/>
+<div class="col-md-4"></div>
+<a class="btn btn-primary col-md-4" href="/material/menu">Edit Menu</a>
+<div class="col-md-4"></div>
+<br/><br/><br/><br/>
+<div class="mt-2 col-md-12">  
+</div>
+
+<div class="mt-2 col-md-12">  
+	<h3 class="page-header" align="center"> Current Menu </h3>
+	<table class="table">
+	  <thead>
+	    <tr>
+	      <th>#</th>
+	      <th>Dish</th>
+	      <th>Item Category</th>
+	      <th>Price</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {{#each materials}}
+	      <tr>
+	        <th scope="row">{{@index}}</th>
+	        <td>{{dish}}</td>
+	        <td>{{itemCategory}}</td>
+	        <td>{{price}}</td>  
+	      </tr>
+	    {{/each}}
+	  </tbody>
+	</table>
+</div>

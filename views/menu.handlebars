@@ -1,0 +1,21 @@
+<h2 class="page-header">Add a Dish</h2>
+{{#if errors}}
+      {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+      {{/each}}
+{{/if}}
+<form method="post" action="/material/menu">
+   <div class="form-group">
+    <label>Dish</label>
+    <input type="text" class="form-control" placeholder="Dish" name="dish">
+  </div>
+  <div class="form-group">
+    <label>Item Category</label>
+    <input type="text" class="form-control" placeholder="Item Category" name="itemCategory">
+  </div>
+   <div class="form-group">
+    <label>Price</label>
+    <input type="text" class="form-control" placeholder="Price" name="price">
+  </div>
+  <button type="submit" class="btn btn-default">Submit</button>
+</form>

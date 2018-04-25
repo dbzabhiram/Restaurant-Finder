@@ -5,30 +5,30 @@ var Material = require('../models/material');
 var User = require('../models/user');
 
 //Current Menu
-router.get('/index', ensureAuthenticated, function (req, res) {
+// router.get('/index', ensureAuthenticated, function (req, res) {
 	
-	Material.getAllMaterials(function(materials){
+// 	Material.getAllMaterials(function(materials){
 
-		res.render('index', {
-			materials : materials
-		});
-	})
+// 		res.render('index', {
+// 			materials : materials
+// 		});
+// 	})
 
-})
+// })
 
 
-// Available Materialss
-router.post('/index', ensureAuthenticated, function (req, res) {
-	var name = req.body.name;
+// // Available Materialss
+// router.post('/index', ensureAuthenticated, function (req, res) {
+// 	var name = req.body.name;
 
-	Material.getMaterialByPattern(name, function(materials){
+// 	Material.getMaterialByPattern(name, function(materials){
 
-		res.render('index', {
-			materials : materials
-		});
-	})
+// 		res.render('index', {
+// 			materials : materials
+// 		});
+// 	})
 
-})
+// })
 
 // Edit Menu
 router.get('/menu', ensureAuthenticated, function(req, res){
@@ -52,20 +52,20 @@ router.post('/menu', ensureAuthenticated, function(req, res){
 			errors:errors
 		});
 	} else {
+		let user = req.user;
 		var newMaterial = new Material({
 			dish: dish,
 			itemCategory: itemCategory,
 			price: price,
+			issuedUser: [user]
 		});
 
+		//Material.getMaterialById(req.params.id, function(material){
+			user.issuedMaterial.push(material)
+			user.save()
+		//});
+
 		Material.getMaterialByDish(newMaterial.dish, function(existingMaterial){
-			// if(existingMaterial){
-			// 	existingMaterial.set({ numCopies: existingMaterial.numCopies + 1 });
-			// 	newMaterial = existingMaterial;
-			// }
-			// else {
-			// 	newMaterial.numCopies = 1;
-			// }
 
 			Material.createMaterial(newMaterial, function(err, material){
 				if(err) throw err;

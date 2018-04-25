@@ -18,16 +18,18 @@ router.get('/login', function(req, res){
 //Register User
 router.post('/register', function(req, res){
 	var name = req.body.name ;
-	var email = req.body.email ;
-	var username = req.body.username ;
+	var contact = req.body.contact ;
+	var ownerName = req.body.ownerName ;
+	var address = req.body.address ;
 	var password = req.body.password ;
 	var password2 = req.body.password2 ;
 
 	//Validation
 	req.checkBody('name', 'Name is required').notEmpty();
-	req.checkBody('email', 'Email is required').notEmpty();
-	req.checkBody('email', 'Email is not valid').isEmail();
-	req.checkBody('username', 'Username is required').notEmpty();
+	req.checkBody('contact', 'Contact Number is required').notEmpty();
+	//req.checkBody('email', 'Email is not valid').isEmail();
+	req.checkBody('address', 'Address is required').notEmpty();
+	req.checkBody('ownerName', 'Owner Name is required').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('password2', 'Password2 do not match').equals(req.body.password);
 
@@ -40,8 +42,9 @@ router.post('/register', function(req, res){
 	} else{
 		var newUser = new User({
 			name: name,
-			email: email, 
-			username: username,
+			contact: contact, 
+			ownerName: ownerName,
+			address: address,
 			password: password
 		});
 
@@ -57,8 +60,8 @@ router.post('/register', function(req, res){
 });
 
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    User.getUserByUsername(username, function(err, user){
+  function(ownerName, password, done) {
+    User.getUserByOwnerName(ownerName, function(err, user){
     	if(err) throw err;
     	if(!user){
     		return done(null, false, {message: 'Unknown User'});

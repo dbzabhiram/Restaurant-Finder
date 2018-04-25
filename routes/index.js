@@ -7,10 +7,13 @@ var User = require('../models/user');
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
 	let user = req.user;
+	console.log(user.ownerName);
+	console.log(user.issuedMaterial);
 
-	Material.getMaterialsByIds(user.issuedMaterial, function(materials){
+	Material.getAllMaterials(user.issuedMaterial, function(materials){
+	//Material.getMaterialsByIds(user.issuedMaterial, function(materials){
 		res.render('index', {
-			materials : materials
+			materials : materials, ownerName: user.ownerName
 		});	
 	})
 });

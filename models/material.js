@@ -36,7 +36,7 @@ module.exports.getMaterialByPattern = function(dish, callback){
 	});	
 }
 
-module.exports.getAllMaterials = function (callback) {
+module.exports.getAllMaterials = function (materials,callback) {
 	Material.find({}, function(err, materials){
 		callback(materials)
 	})

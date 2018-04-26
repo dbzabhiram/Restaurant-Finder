@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
+var Material = require('./material')
+
 //User Schema
 var UserSchema = mongoose.Schema({
 	ownerName: {
@@ -20,6 +22,9 @@ var UserSchema = mongoose.Schema({
 		type: String
 	},
 	issuedMaterial: [ {type : mongoose.Schema.ObjectId, ref : 'Material'} ]
+},
+{
+	usePushEach: true
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);
@@ -35,11 +40,17 @@ module.exports.createUser = function(newUser, callback){
 
 module.exports.getUserByOwnerName = function(ownerName, callback){
 	var query = {ownerName: ownerName};
-	User.findOne(query, callback);
+	User.findOne(query, function(err, user) {
+		console.log(user)
+		callback(null, user);
+	});
 }
 
 module.exports.getUserById = function(id, callback){
-	User.findById(id, callback);
+	User.findById(id, function(err, user){
+		console.log(user)
+		callback(null, user);
+	});
 }
 
 module.exports.comparePassword = function(candidatePassword, hash, callback){

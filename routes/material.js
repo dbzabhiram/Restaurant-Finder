@@ -6,7 +6,7 @@ var User = require('../models/user');
 
 //Current Menu
 // router.get('/index', ensureAuthenticated, function (req, res) {
-	
+
 // 	Material.getAllMaterials(function(materials){
 
 // 		res.render('index', {
@@ -60,22 +60,25 @@ router.post('/menu', ensureAuthenticated, function(req, res){
 			issuedUser: [user]
 		});
 
-		//Material.getMaterialById(req.params.id, function(material){
-			user.issuedMaterial.push(material)
-			user.save()
-		//});
-
 		Material.getMaterialByDish(newMaterial.dish, function(existingMaterial){
-
-			Material.createMaterial(newMaterial, function(err, material){
-				if(err) throw err;
-			});
-
+			if(existingMaterial == null){
+				Material.createMaterial(newMaterial, function(err, material){
+					if (err){
+						throw err;
+					}
+					else{
+						user.issuedMaterial.push(material);
+						user.save();
+						req.flash('success_msg', 'You have added dish to the Menu.');
+						res.redirect('/');
+					}
+				});
+			}
+			else {
+				req.flash('error_msg', 'Dish already exists')
+				res.redirect('/');
+			}
 		});
-
-		req.flash('success_msg', 'You have added dish to the Menu.');
-
-		res.redirect('/');
 	}
 });
 

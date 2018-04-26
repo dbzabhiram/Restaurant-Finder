@@ -15,28 +15,31 @@ var MaterialSchema = mongoose.Schema({
 		required: true
 	},
 	issuedUser: [{type : mongoose.Schema.ObjectId, ref : 'User'}]
+},
+{
+	usePushEach: true
 });
 
 var Material = module.exports = mongoose.model('Material', MaterialSchema);
 
 module.exports.getMaterialByDish = function(dish, callback){
 	var query = {dish: dish};
-	
+
 	Material.findOne(query, function (err, cb) {
 		callback(cb)
 	});
-	
+
 }
 
 module.exports.getMaterialByPattern = function(dish, callback){
 	var query = {dish: { $regex: new RegExp('.*'+dish+'.*', "i") }};
-	
+
 	Material.find(query, function (err, cb) {
 		callback(cb)
-	});	
+	});
 }
 
-module.exports.getAllMaterials = function (materials,callback) {
+module.exports.getAllMaterials = function (callback) {
 	Material.find({}, function(err, materials){
 		callback(materials)
 	})
@@ -60,8 +63,3 @@ module.exports.getMaterialsByIds = function (ids, callback) {
 		callback(cb)
 	})
 }
-
-
-
-
-
